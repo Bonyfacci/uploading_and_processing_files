@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -39,6 +40,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Django REST Framework
+    'rest_framework',
+
+    # Распределенная система обработки задач в фоновом режиме
+    'django_celery_beat',
+
+    # Документация
+    'drf_yasg',
+
+    # Приложение загрузки и обработки файлов
+    'file.apps.FileConfig'
 ]
 
 MIDDLEWARE = [
@@ -113,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Madrid'
 
 USE_I18N = True
 
@@ -137,3 +150,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# URL-адрес брокера сообщений
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+
+# URL-адрес брокера результатов
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+
+# Часовой пояс для работы Celery
+CELERY_TIMEZONE = 'Europe/Madrid'
+
+# Флаг отслеживания выполнения задач
+CELERY_TASK_TRACK_STARTED = True
+
+# Настройки для выполнения периодических задача
+CELERY_BEAT_SCHEDULE = {
+    'task-name': {
+        'task': 'file.tasks.check_active_file',
+        'schedule': timedelta(minutes=1),
+    },
+}

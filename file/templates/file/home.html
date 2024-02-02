@@ -1,0 +1,80 @@
+{% extends 'file/layouts/layout_base.html' %}
+
+{% block title %}Загрузка и обработка файлов{% endblock %}
+
+
+{% block content %}
+
+<main>
+    <section class="container">
+        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+            <h1 class="display-4 fw-normal text-body-emphasis">Загрузка и обработка файлов</h1>
+            <p class="fs-5 text-body-secondary">Разработан Django REST API,
+                который позволяет загружать файлы на сервер,
+                а затем асинхронно обрабатывать их с использованием Celery.</p>
+        </div>
+    </section>
+    <section class="container">
+        <form method="post" action="" class="row g-3" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+                <input name="file" class="form-control" type="file" id="formFileMultiple" multiple>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-success mb-3">Загрузить файл</button>
+            </div>
+        </form>
+    </section>
+    <section class="container">
+        <div class="col-auto">
+            <table class="table table-bordered border-dark table-striped table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center" scope="col">id</th>
+                    <th class="text-center" scope="col">Наименование файла</th>
+                    <th class="text-center" scope="col">Тип файла</th>
+                    <th class="text-center" scope="col">Дата загрузки файла</th>
+                    <th class="text-center" scope="col">Обработан</th>
+                </tr>
+                </thead>
+                {% if object_list %}
+                <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <th class="text-center" scope="row">{{ object.pk }}</th>
+                        <td class="text-center">{{ object.name }}</td>
+                        <td class="text-center">{{ object.file }}</td>
+                        <td class="text-center">{{ object.uploaded_at }}</td>
+                        <td class="text-center">
+                            {% if object.processed %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check-circle-fill text-success" viewBox="0 0 16 16">
+                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                            </svg>
+                            {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-circle-fill text-warning" viewBox="0 0 16 16">
+                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
+                            </svg>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                {% endif %}
+            </table>
+        </div>
+    </section>
+</main>
+
+{% endblock %}
+
+
+{% block element %}
+
+
+{% endblock %}
+
+{% block blog %}
+
+
+{% endblock %}
