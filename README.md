@@ -8,6 +8,12 @@
 
  - ![alt text](https://img.shields.io/badge/PostgreSQL-15.3-grey?style=plastic&logo=postgresql&logoColor=white&labelColor=%234169E1)
 
+ - ![alt text](https://img.shields.io/badge/Celery-5.3.6-grey?style=plastic&logo=celery&logoColor=white&labelColor=37814A)
+
+ - ![alt text](https://img.shields.io/badge/Redis-5.0.1-grey?style=plastic&logo=redis&logoColor=white&labelColor=DC382D)
+
+ - ![alt text](https://img.shields.io/badge/Docker-v4.25.0-grey?style=plastic&logo=docker&logoColor=white&labelColor=2496ED)
+
 ### Описание проекта
 Разработан Django REST API, который позволяет загружать файлы на сервер, а затем асинхронно обрабатывать их с использованием Celery.
 
@@ -15,12 +21,16 @@
 
 Реализован фронтенд для взаимодействия с пользователем.
 
+***
+
+### Запуск через консоль
+
 <details>
 <summary>Для запуска через консоль необходимо:</summary>
 
  - Клонировать проект на собственный диск в новом каталоге
- - Создать виртуальное окружение
- - Установить зависимости командой:
+   - Создать виртуальное окружение
+   - Установить зависимости командой:
 ```python
     pip install -r requirements.txt
 ```
@@ -58,7 +68,7 @@
    <summary>Для создания тестового пользователя - администратор:</summary>
 
    - login: admin
-   - password: admin 
+     - password: admin 
    ```python
         python manage.py csu
    ```
@@ -71,22 +81,25 @@
       ```python
           python manage.py runserver
       ```
-   - Запустить celery (в другом окне терминала)
-      ```python
-          celery -A config worker -l INFO -P eventlet
-      ```
-   - Запустить tasks (в другом окне терминала)
-      ```python
-          celery -A config beat -l info -S django
-      ```
-   - Запустить сервер
-      ```python
-          python manage.py runserver
-      ```
+     - Запустить celery (в другом окне терминала)
+        ```python
+            celery -A config worker -l INFO -P eventlet
+        ```
+     - Запустить tasks (в другом окне терминала)
+        ```python
+            celery -A config beat -l info -S django
+        ```
+     - Запустить сервер
+        ```python
+            python manage.py runserver
+        ```
  </details>
 
 </details>
 
+***
+
+### Запуск через Docker
 
 <details>
 <summary>Для запуска через Docker необходимо:</summary>
@@ -98,11 +111,13 @@
 
 </details>
 
+***
+
 ### Для завершения работы необходимо:
 
  - Нажать комбинацию клавиш `CTRL + C` в окне терминала
 
-
+***
 
 
 ### Как изменится архитектура, если мы ожидаем большую нагрузку
@@ -125,6 +140,9 @@ RPS - количество запросов в секунду.
 
 Данное приложение не имеет узких мест и достаточно оптимизировано. 
 Соответственно на локальной машине может выдержать от нескольких сотен до нескольких тысяч запросов в секунду.
+
+***
+
 
 <details>
 <summary><b>Connect with me:</b></summary>
